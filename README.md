@@ -1,7 +1,7 @@
 # DataAnalytics-Assessment
 
 
-This project contains SQL queries designed to tackle four specific business scenarios for analyzing Cowrywise customer and transaction data. Below, I’ll walk you through each task, explaining how I approached the problem and the challenges I faced while writing the queries.
+This project contains SQL queries designed to tackle four specific business scenarios for analyzing Cowrywise customer and transaction data. Below, I go through each task, explaining how I approached the problem and the challenges I faced while writing the queries.
 
 ---
 
