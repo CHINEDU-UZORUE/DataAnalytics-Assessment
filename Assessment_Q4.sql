@@ -18,9 +18,9 @@ GROUP BY owner_id
 SELECT
 	u.id AS owner_id,
 	CONCAT(u.first_name, ' ', u.last_name) AS name,
-	ROUND((DATEDIFF(CURDATE(), u.date_joined))/30,0) AS tenure_months,
+	TIMESTAMPDIFF(MONTH, u.date_joined, CURDATE()) AS tenure_months,
     a.total_transactions,
-    ROUND((a.total_transactions / ((DATEDIFF(CURDATE(), u.date_joined))/30)) * 12 * avg_profit_per_transaction,2) AS estimated_clv
+    ROUND((a.total_transactions / (TIMESTAMPDIFF(MONTH, u.date_joined, CURDATE()))) * 12 * avg_profit_per_transaction,2) AS estimated_clv
 FROM users_customuser AS u
 JOIN appt AS a ON u.id = a.owner_id
 ORDER BY estimated_clv DESC;
