@@ -52,7 +52,7 @@ year (365 days) .
 ### My Approach
 I used a CTE to find the latest transaction date per plan (`plan_id`) from the `savings_savingsaccount` table. Then, I created another CTE to identify all active plans (those with `is_regular_savings = 1` or `is_a_fund = 1`). I joined these with a `LEFT JOIN` to include plans that might have no transactions at all, then filtered for those where the last transaction was older than 365 days. The `DATEDIFF` function helped calculate inactivity days, and I included the account type (Savings or Investment) for clarity.
 
-For plans with no transactions, the `created_on` from the `savings_savingsaccount` table date must be before the current date, meaning the plan has been inactive for over 365 days. The condition `created_on < CURDATE() - INTERVAL 365 DAY` ensures this. I also used `DATEDIFF(CURDATE(), COALESCE(lt.last_transaction_date, a.created_on))` to count the days of inactivity (either since the last transaction or since created_on if no transactions exist). 
+I used `DATEDIFF(CURDATE(), COALESCE(lt.last_transaction_date, a.created_on))` to count the days of inactivity (either since the last transaction or since created_on if no transactions exist). Also, in the final WHERE clause, I used the condition `created_on < CURDATE() - INTERVAL 365 DAY` to ensure that for plans with no transactions, the `created_on` from the `savings_savingsaccount` table date must be before the current/present date, meaning the plan has been inactive for at least 366 days.
 
 ### Challenges Faced
 - **Inflow Definition**: The requirement mentioned “no inflow transactions,” but I wasn’t sure if this meant only deposits (`confirmed_amount > 0`) or any transaction. I leaned toward any transaction to avoid missing active accounts.
@@ -64,7 +64,7 @@ For plans with no transactions, the `created_on` from the `savings_savingsaccoun
 ## Question 4. Customer Lifetime Value (CLV) Estimation
 - **Scenario**: Marketing wants to estimate CLV based on account tenure and transaction volume (simplified model).
 - **Task**: For each customer, assuming the profit_per_transaction is 0.1% of the transaction value, calculate:
--- ● Account tenure (months since signup)
+● Account tenure (months since signup)
 ● Total transactions
 ● Estimated CLV (Assume: CLV = (total_transactions / tenure) * 12 *
 avg_profit_per_transaction)
