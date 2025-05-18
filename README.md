@@ -56,7 +56,7 @@ I used `DATEDIFF(CURDATE(), COALESCE(lt.last_transaction_date, a.created_on))` t
 
 ### Challenges Faced
 - **Inflow Definition**: The requirement mentioned “no inflow transactions,” but I wasn’t sure if this meant only deposits (`confirmed_amount > 0`) or any transaction. I leaned toward any transaction to avoid missing active accounts.
-- **Null Transactions**: Some plans might have no transactions, resulting in a `NULL` `last_transaction_date`. The `LEFT JOIN` handled this, but I had to ensure the `WHERE` clause correctly filtered for old or missing transactions.
+- **Null Transactions**: Some plans might have no transactions, resulting in a `NULL` `last_transaction_date`. The `LEFT JOIN` handled this, as well as using the `COALESCE()` function.
 - **Active Accounts**: Defining “active” accounts was ambiguous. I assumed it meant plans with `is_regular_savings = 1` or `is_a_fund = 1`, but there could be other status flags like `is_active` in user_customuser table.
 
 ---
