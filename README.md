@@ -18,7 +18,7 @@ I started by thinking about how to identify customers with at least one savings 
 Next, I joined these to find customers who appeared in both, meaning they had at least one of each. Finally, I pulled in the user details and summed up the `confirmed_amount` from the `savings_savingsaccount` table to get total deposits. I also had to make sure the sorting by total deposits was accurate, so grouping by `owner_id` and using `SUM` was critical.
 
 ### Challenges Faced
-- **Understanding Plan Types**: Initially, I wasn’t sure if `is_regular_savings = 1` and `is_a_fund = 1` were mutually exclusive or if a plan could have both flags set. I assumed they were distinct based on the context, but this required careful validation.
+- **Understanding Plan Types**: Initially, I wasn’t sure if `is_regular_savings = 1` and `is_a_fund = 1` were mutually exclusive or if a plan could have both flags set. I assumed they were distinct based on the context, but by carefully observing the dataset, I realized they were mutually exclusive.
 - **Joining Data**: Joining the `qualified_customers` CTE with the `savings_savingsaccount` table was somehow because I needed to ensure all relevant deposits were included without duplicating rows. The `GROUP BY u.id` helped avoid this.
 - **Performance Concerns**: With the large size of the datasets, I worried about the performance of multiple CTEs and joins. This way, I kept the query modular to make it easier to optimize later if needed.
 
